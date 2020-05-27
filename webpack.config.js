@@ -1,22 +1,29 @@
+const HtmlWebPackPlugin = require("html-webpack-plugin");
+
 module.exports = {
-  entry: {
-    main: ["./script1.js", "./script2.js"],
-  },
-  output: {
-    filename: "./public/[name].js",
-  },
   module: {
     rules: [
       {
-        test: /\.m?js$/,
-        exclude: /(node_modules|bower_components)/,
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
         use: {
           loader: "babel-loader",
-          options: {
-            presets: ["@babel/preset-env"],
-          },
         },
+      },
+      {
+        test: /\.html$/,
+        use: [
+          {
+            loader: "html-loader",
+          },
+        ],
       },
     ],
   },
+  plugins: [
+    new HtmlWebPackPlugin({
+      template: "./index.html",
+      filename: "./index.html",
+    }),
+  ],
 };
